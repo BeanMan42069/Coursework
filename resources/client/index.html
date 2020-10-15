@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bean</title>
+    <title>The Quiz</title>
+    <script src="/client/js/users.js"></script>
+    <link rel="stylesheet" type="text/css" href="/client/css/styles.css">
 </head>
 <body>
-<img src="https://cdn.glitch.com/0e4d1ff3-5897-47c5-9711-d026c01539b8%2Fbddfd6e4434f42662b009295c9bab86e.gif?v=1573157191712" alt="this slowpoke moves"  width="5750" alt="404 image"/>
+<button onclick="getUsersList()">Users List</button>
+<table id="Users"></table>
+<br>
+
+<form id="userDetails">
+    User id: <input type="text" id="UserID">
+</form>
+<button onclick='getUser();'>Get User/button>
+<div id="DisplayOneUser"></div>
+
+<form id="InputUserDetails">
+    Username: <input type="text" name="Name">
+    Password: <input type="text" name="PassWord">
+    Email: <input type="text" name="Email">
+</form>
+<button onclick='getUsersList();'>Add User</button>
+<table id="UsersTable"></table>
 </body>
 </html>
+

@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-@Path("users/")
+@Path("Users/")
 @Consumes(MediaType.MULTIPART_FORM_DATA)
 @Produces(MediaType.APPLICATION_JSON)
 
@@ -18,7 +18,7 @@ public class Users { ;
 
     @GET
     @Path("list")
-    public String UsersList() {
+    public String getUsersList() {
         System.out.println("Invoked Users.UsersList()");
         JSONArray response = new JSONArray();
         try {
@@ -58,7 +58,7 @@ public class Users { ;
     }
 
     @POST
-    @Path("add")
+    @Path("andd")
     public String UsersAdd(@FormDataParam("UserID") Integer UserID, @FormDataParam("Name") String Name, @FormDataParam("Email") String Email, @FormDataParam("admin") Boolean Admin, @FormDataParam("Password") String Password,  @FormDataParam("SessionToken") String Cookie) {
         System.out.println("Invoked Users.UsersAdd()");
         try {
@@ -77,6 +77,9 @@ public class Users { ;
         }
 
     }
+    //add rest of apis
+
+
 
 }
 
