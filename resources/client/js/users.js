@@ -1,6 +1,6 @@
 "use strict";
 function getUsersList() {
-    debugger;
+    //debugger;
     console.log("Invoked getUsersList()");     //console.log your BFF for debugging client side - also use debugger statement
     const url = "/users/list";    		// API method on web server will be in Users class, method list
     fetch(url, {
@@ -15,6 +15,7 @@ function getUsersList() {
         }
     });
 }
+
 function formatUsersList(myJSONArray){
     let dataHTML = "";
     for (let item of myJSONArray) {
@@ -57,12 +58,18 @@ function UsersLogin() {
         } else {
             Cookies.set("Token", response.Token);
             Cookies.set("Email", response.Email);
-            window.open("index.html", "_self");       //open index.html in same tab
+            window.open("menu.html", "_self");       //open menu.html in same tab
         }
     });
 }
+function AddUser() {
+    //debugger;
+    console.log("Invoked AddUser()")
+    var url = "/users/add";     //finish this off using url below
+    var formdata = new FormData(document.getElementById('UserForm')); //https://docs.google.com/presentation/d/1IxHJ_d9__nkUnChQOR04BfIQp5Lixb1qJEaK6cL5lAg/edit#slide=id.g9dfdbb466f_1_305
 
 
 
+}
 
 

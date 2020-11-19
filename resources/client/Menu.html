@@ -6,6 +6,19 @@
     <script src="/client/js/items.js"></script>
     <link rel="stylesheet" type="text/css" href="/client/css/styles.css">
 </head>
-
+<body>
 <button onclick="getItemsList()">Items List</button>
 <table id="Items"></table>
+
+
+
+<form id="ItemForm">
+    ItemID
+    <input type="text" name="ItemID" id="ItemID">
+    Name
+    <input type="text" name="Name" id="Name">
+    ResourceID (Should be same as ItemID)
+    <input type="text" name="ResourceID" id="ResourceID">
+</form>
+<button class="button" onclick='ItemsAdd();'>Add</button>  <!--ItemsAdd()in users.js-->
+</body>

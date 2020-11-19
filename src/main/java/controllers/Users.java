@@ -59,7 +59,7 @@ public class Users { ;
     }
     //adding a new user
     @POST
-    @Path("and")
+    @Path("add")
     public String UsersAdd(@FormDataParam("UserID") Integer UserID, @FormDataParam("Name") String Name, @FormDataParam("Email") String Email, @FormDataParam("admin") Boolean Admin, @FormDataParam("Password") String Password,  @FormDataParam("SessionToken") String Cookie) {
         System.out.println("Invoked Users.UsersAdd()");
         try {
@@ -69,7 +69,6 @@ public class Users { ;
             ps.setString(3, Name);
             ps.setBoolean(4, Admin);
             ps.setString(5, Password);
-            ps.setString(6, Cookie);
             ps.execute();
             return "{\"OK\": \"Added user.\"}";
         } catch (Exception exception) {
@@ -100,10 +99,10 @@ public class Users { ;
                     userDetails.put("Token", Token);
                     return userDetails.toString();
                 } else {
-                    return "{\"Error\": \"Incorrect password!\"}";
+                    return "{\"Error\": \"Incorrect username or password\"}";
                 }
             } else {
-                return "{\"Error\": \"Incorrect username.\"}";
+                return "{\"Error\": \"Incorrect username or password\"}";
             }
         } catch (Exception exception) {
             System.out.println("Database error during /users/login: " + exception.getMessage());

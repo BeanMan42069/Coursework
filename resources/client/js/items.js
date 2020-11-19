@@ -2,7 +2,7 @@
 function getItemsList() {
     //debugger;
     console.log("Invoked getItemsList()");     //console.log your BFF for debugging client side - also use debugger statement
-    const url = "/Items/list";    		// API method on web server will be in Users class, method list
+    const url = "/items/list";    		// API method on web server will be in Users class, method list
     fetch(url, {
         method: "GET",				//Get method
     }).then(response => {
@@ -22,5 +22,29 @@ function formatItemsList(myJSONArray){
     }
     document.getElementById("ItemsTable").innerHTML = dataHTML;
 }
+function ItemsAdd() {
+    //debugger;
+    console.log("Invoked ItemsAdd() ");
+    let url = "/items/add";
+    let formData = new FormData(document.getElementById('ItemForm'));
+
+    fetch(url, {
+        method: "POST",
+        body: formData,
+    }).then(response => {
+        return response.json();                 //now return that promise to JSON
+    }).then(response => {
+        if (response.hasOwnProperty("Error")) {
+            alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
+        } else {
+            Cookies.set("Token", response.Token);   //change these to match items in database
+            Cookies.set("Email", response.Email);
+            window.open("menu.html", "_self");       //change these so it adds to the database instead of opening a new page
+
+        }
+    });
+}
+}
+
 
 
