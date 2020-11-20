@@ -1,7 +1,7 @@
 "use strict";
 function getUsersList() {
     //debugger;
-    console.log("Invoked getUsersList()");     //console.log your BFF for debugging client side - also use debugger statement
+    console.log("Invoked getUserList()");     //console.log your BFF for debugging client side - also use debugger statement
     const url = "/users/list";    		// API method on web server will be in Users class, method list
     fetch(url, {
         method: "GET",				//Get method
@@ -23,7 +23,7 @@ function formatUsersList(myJSONArray){
     }
     document.getElementById("UsersTable").innerHTML = dataHTML;
 }
-function getUser() {
+function getUsers() {
     console.log("Invoked getUser()");     //console.log your BFF for debugging client side
     const UserID = document.getElementById("UserID").value;  //get the UserId from the HTML element with id=UserID
     //let UserID = 1; 			  //You could hard code it if you have problems
@@ -43,7 +43,7 @@ function getUser() {
 }
 function UsersLogin() {
     debugger;
-    console.log("Invoked UsersLogin() ");
+    console.log("Invoked UserLogin() ");
     let url = "/users/login";
     let formData = new FormData(document.getElementById('LoginForm'));
 
@@ -62,13 +62,24 @@ function UsersLogin() {
         }
     });
 }
-function AddUser() {
+function AddUsers() {
     //debugger;
-    console.log("Invoked AddUser()")
-    var url = "/users/add";     //finish this off using url below
-    var formdata = new FormData(document.getElementById('UserForm')); //https://docs.google.com/presentation/d/1IxHJ_d9__nkUnChQOR04BfIQp5Lixb1qJEaK6cL5lAg/edit#slide=id.g9dfdbb466f_1_305
+    console.log("Invoked AddUser() ");
+    let url = "/users/add";
+    let formData = new FormData(document.getElementById('UserForm'));
 
-
+    fetch(url, {
+        method: "POST",
+        body: formData,
+    }).then(response => {
+        return response.json();                 //now return that promise to JSON
+    }).then(response => {
+        if (response.hasOwnProperty("Error")) {
+            alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
+        } else {
+            alert("User was added to database.");
+        }
+    });
 
 }
 

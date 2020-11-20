@@ -1,6 +1,6 @@
 "use strict";
 function getItemsList() {
-    debugger;
+    //debugger;
     console.log("Invoked getItemsList()");     //console.log your BFF for debugging client side - also use debugger statement
     const url = "/items/list";    		// API method on web server will be in Users class, method list
     fetch(url, {
@@ -20,9 +20,9 @@ function formatItemsList(myJSONArray){
     for (let item of myJSONArray) {
         dataHTML += "<tr><td>" + item.ItemID + "<td><td>" + item.Name + "<tr><td>";
     }
-    document.getElementById("ItemsTable").innerHTML = dataHTML;      //something wrong with dataHTMLx
+    document.getElementById("ItemsTable").innerHTML = dataHTML;
 }
-function ItemsAdd() {
+function AddItems() {
     //debugger;
     console.log("Invoked ItemsAdd() ");
     let url = "/items/add";
@@ -37,10 +37,7 @@ function ItemsAdd() {
         if (response.hasOwnProperty("Error")) {
             alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
         } else {
-            Cookies.set("Token", response.Token);   //change these to match items in database
-            Cookies.set("Email", response.Email);
-            window.open("menu.html", "_self");       //change these so it adds to the database instead of opening a new page
-
+            alert("Item was added to database.");
         }
     });
 

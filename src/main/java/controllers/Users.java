@@ -61,14 +61,13 @@ public class Users { ;
     @POST
     @Path("add")
     public String UsersAdd(@FormDataParam("UserID") Integer UserID, @FormDataParam("Name") String Name, @FormDataParam("Email") String Email, @FormDataParam("admin") Boolean Admin, @FormDataParam("Password") String Password,  @FormDataParam("SessionToken") String Cookie) {
-        System.out.println("Invoked Users.UsersAdd()");
+        System.out.println("Invoked Users.AddUser()");
         try {
-            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Users (UserID, Name, Email, Admin) VALUES (?, ?, ?, ?, ?, ?");
+            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Users (UserID, Password, Name, Email) VALUES (?, ?, ?, ?)");
             ps.setInt(1, UserID);
-            ps.setString(2, Email);
+            ps.setString(2, Password);
             ps.setString(3, Name);
-            ps.setBoolean(4, Admin);
-            ps.setString(5, Password);
+            ps.setString(4, Email);
             ps.execute();
             return "{\"OK\": \"Added user.\"}";
         } catch (Exception exception) {
@@ -81,7 +80,8 @@ public class Users { ;
     @POST
     @Path("login")
     public String UsersLogin(@FormDataParam("Email") String Email, @FormDataParam("Password") String Password) {
-        System.out.println("Invoked loginUser() on path users/login");
+        System.out.println("Invoked loginUsers" +
+                "() on path users/login");
         try {
             PreparedStatement ps1 = Main.db.prepareStatement("SELECT PassWord FROM Users WHERE Email = ?");
             ps1.setString(1, Email);

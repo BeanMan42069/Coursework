@@ -38,12 +38,13 @@ public class Items{ ;
         }
         @POST
         @Path("add")
-        public String UsersAdd(@FormDataParam("ItemID") Integer ItemID, @FormDataParam("Name") String Name) {
+        public String UsersAdd(@FormDataParam("ItemID") Integer ItemID, @FormDataParam("Name") String Name, @FormDataParam("ResourceID") Integer ResourceID) {
             System.out.println("Invoked Items.ItemAdd()");
             try {
-                PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Items (ItemID, Name) VALUES (?, ?)");
+                PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Items (ItemID, Name,ResourceID) VALUES (?, ?, ?)");
                 ps.setInt(1, ItemID);
                 ps.setString(2, Name);
+                ps.setInt(3, ResourceID);
                 ps.execute();
                 return "{\"OK\": \"Added Item.\"}";
             } catch (Exception exception) {
