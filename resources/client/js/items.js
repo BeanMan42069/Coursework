@@ -1,6 +1,6 @@
 "use strict";
 function getItemsList() {
-    //debugger;
+    debugger;
     console.log("Invoked getItemsList()");     //console.log your BFF for debugging client side - also use debugger statement
     const url = "/items/list";    		// API method on web server will be in Users class, method list
     fetch(url, {
@@ -20,7 +20,7 @@ function formatItemsList(myJSONArray){
     for (let item of myJSONArray) {
         dataHTML += "<tr><td>" + item.ItemID + "<td><td>" + item.Name + "<tr><td>";
     }
-    document.getElementById("ItemsTable").innerHTML = dataHTML;
+    document.getElementById("ItemsTable").innerHTML = dataHTML;      //something wrong with dataHTMLx
 }
 function ItemsAdd() {
     //debugger;
@@ -43,7 +43,7 @@ function ItemsAdd() {
 
         }
     });
-}
+
 }
 
 
