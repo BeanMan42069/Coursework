@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 @Consumes(MediaType.MULTIPART_FORM_DATA)
 @Produces(MediaType.APPLICATION_JSON)
 
-public class checkout {  //get basket NEED TO UPDATE FOR ADDED table
+public class Checkout {  //get basket NEED TO UPDATE FOR ADDED table
     @GET
     @Path("get/{UserID}")
     public String GetUser(@PathParam("UserID") Integer UserID) {

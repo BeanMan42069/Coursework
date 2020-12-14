@@ -1,5 +1,6 @@
 package controllers;
 
+
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -38,13 +39,16 @@ public class Items{ ;
         }
         @POST
         @Path("add")
-        public String UsersAdd(@FormDataParam("ItemID") Integer ItemID, @FormDataParam("Name") String Name, @FormDataParam("ResourceID") Integer ResourceID) {
+        public String ItemsAdd(@FormDataParam("ItemID") Integer ItemID, @FormDataParam("Name") String Name, @FormDataParam("ResourceID") Integer ResourceID,@FormDataParam("CategoryID") Integer CategoryID, @FormDataParam("Price") Float Price, @FormDataParam("Status") Integer Status) {
             System.out.println("Invoked Items.ItemAdd()");
             try {
-                PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Items (ItemID, Name,ResourceID) VALUES (?, ?, ?)");
+                PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Items (ItemID, Name, ResourceID, CategoryID, Price, Status) VALUES (?, ?, ?, ?, ?, ?)");
                 ps.setInt(1, ItemID);
                 ps.setString(2, Name);
                 ps.setInt(3, ResourceID);
+                ps.setInt(4, CategoryID);
+                ps.setFloat(5, Price);
+                ps.setInt(6, Status);
                 ps.execute();
                 return "{\"OK\": \"Added Item.\"}";
             } catch (Exception exception) {
