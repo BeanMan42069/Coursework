@@ -23,12 +23,11 @@ function formatUsersList(myJSONArray){
     }
     document.getElementById("UsersTable").innerHTML = dataHTML;
 }
-function getUsers() {
+function getUsers() {  //this function needs fixing
     console.log("Invoked getUser()");     //console.log your BFF for debugging client side
     const UserID = document.getElementById("UserID").value;  //get the UserId from the HTML element with id=UserID
-    //let UserID = 1; 			  //You could hard code it if you have problems
-    //debugger;				  //debugger statement to allow you to step through the code in console dev F12
-    const url = "/users/getUser/";       // API method on webserver
+    debugger;				  //debugger statement to allow you to step through the code in console dev F12
+    const url = "/users/get/";       // API method on webserver
     fetch(url + UserID, {                // UserID as a path parameter
         method: "GET",
     }).then(response => {
@@ -37,7 +36,7 @@ function getUsers() {
         if (response.hasOwnProperty("Error")) {         //checks if response from server has an "Error"
             alert(JSON.stringify(response));            // if it does, convert JSON object to string and alert
         } else {
-            document.getElementById("DisplayOneUser").innerHTML = response.UserID + " " + response.UserName;  //output data
+            document.getElementById("DisplayOneUser").innerHTML = response.UserID + " " + response.Name;  //Hi Laura, this line is giving me hiccups
         }
     });
 }

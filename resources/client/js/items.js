@@ -22,6 +22,7 @@ function formatItemsList(myJSONArray){
     }
     document.getElementById("ItemsTable").innerHTML = dataHTML;
 }
+
 function AddItems() {
     //debugger;
     console.log("Invoked ItemsAdd() ");
@@ -41,6 +42,25 @@ function AddItems() {
         }
     });
 
+function AddItems() {
+    //debugger;
+    console.log("Invoked ItemsDelete() ");
+    let url = "/items/Delete";
+    let formData = new FormData(document.getElementById('ItemForm'));
+
+    fetch(url, {
+        method: "POST",
+        body: formData,
+    }).then(response => {
+        return response.json();                 //now return that promise to JSON
+    }).then(response => {
+        if (response.hasOwnProperty("Error")) {
+            alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
+        } else {
+            alert("Item was added to database.");
+        }
+    });
+}
 }
 
 
