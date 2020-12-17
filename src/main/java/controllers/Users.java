@@ -37,7 +37,7 @@ public class Users { ;
             return "{\"Error\": \"Unable to list items.  Error code xx.\"}";
         }
     }
-    //gets the info about a User with x ID
+    //gets the data about a User with x ID
     @GET
     @Path("get/{UserID}")
     public String GetUser(@PathParam("UserID") Integer UserID) {
