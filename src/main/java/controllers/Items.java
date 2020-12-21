@@ -37,6 +37,26 @@ public class Items{ ;
                 return "{\"Error\": \"Unable to list items.  Error code xx.\"}";
             }
         }
+        @GET
+        @Path("get/{ItemID}")
+        public String GetUser(@PathParam("ItemID") Integer ItemID) {
+            System.out.println("Invoked Users.GetUser() with UserID " + ItemID);
+            try {
+                PreparedStatement ps = Main.db.prepareStatement("SELECT ItemID, Name, Price FROM Items WHERE ItemID = ?"); //selecting ItemID, Name, and Price from the table Items where the ItemID is x
+                ps.setInt(1, ItemID);
+                ResultSet results = ps.executeQuery();
+                JSONObject response = new JSONObject();
+                if (results.next() == true) {
+                    response.put("ItemID", results.getString(1));
+                    response.put("Name", results.getString(2));
+                    response.put("Price", results.getFloat(3));
+                }
+                return response.toString();
+            } catch (Exception exception) {
+                System.out.println("Database error: " + exception.getMessage());
+                return "{\"Error\": \"Unable to get item, please see server console for more info.\"}";
+            }
+        }
         @POST
         @Path("add")
         public String ItemsAdd(@FormDataParam("ItemID") Integer ItemID, @FormDataParam("Name") String Name, @FormDataParam("ResourceID") Integer ResourceID,@FormDataParam("CategoryID") Integer CategoryID, @FormDataParam("Price") Float Price, @FormDataParam("Status") Integer Status) {

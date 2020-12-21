@@ -26,11 +26,19 @@
 </form>
 <button class="button" onclick='AddItems();'>Add</button>  <!--ItemsAdd()in users.js-->
 
+<form id="itemDetails">
+    ItemID
+    <input type="text" name="ItemID" id="ItemIDnum">
+</form>
+<button onclick='getItems();'>Run getItem</button>
+<div id="DisplayOneUser"></div>
+<br>
+
 <form id="ItemDelete">
     ItemID
     <input type="text" name="ItemID" id="Item">
 </form>
+<button class="button" onclick='DeleteItems();'>Delete</button>
 
-<button class="button" onclick='AddItems();'>Add</button>
 
 </body>

@@ -23,6 +23,25 @@ function formatItemsList(myJSONArray){
     document.getElementById("ItemsTable").innerHTML = dataHTML;
 }
 
+function getItems() {
+    console.log("Invoked getUser()");     //console.log your BFF for debugging client side
+    const ItemIDnum = document.getElementById("ItemIDnum").value;  //get the UserId from the HTML element with id=ItemIDnum
+    //debugger;				  //debugger statement to allow you to step through the code in console dev F12
+    const url = "/items/get/";       // API method on webserver
+    fetch(url + ItemIDnum, {                // ItemIDnum as a path parameter
+        method: "GET",
+    }).then(response => {
+        return response.json();                         //return response to JSON
+    }).then(response => {
+        if (response.hasOwnProperty("Error")) {         //checks if response from server has an "Error"
+            alert(JSON.stringify(response));            // if it does, convert JSON object to string and alert
+        } else {
+            document.getElementById("DisplayOneUser").innerHTML = response.ItemID + " " + response.Name + " £" + response.Price;
+            document.getElementById("DisplayOneUser").innerHTML = itemsHTML;
+        }
+    });
+}
+
 function AddItems() {
     //debugger;
     console.log("Invoked ItemsAdd() ");
@@ -42,7 +61,7 @@ function AddItems() {
         }
     });
 
-function AddItems() {
+function DeleteItems() {
     //debugger;
     console.log("Invoked ItemsDelete() ");
     let url = "/items/Delete";
@@ -57,7 +76,7 @@ function AddItems() {
         if (response.hasOwnProperty("Error")) {
             alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
         } else {
-            alert("Item was added to database.");
+            alert("Item was removed from database.");
         }
     });
 }

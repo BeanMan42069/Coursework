@@ -23,7 +23,7 @@ function formatUsersList(myJSONArray){
     }
     document.getElementById("UsersTable").innerHTML = dataHTML;
 }
-function getUsers() {  //this function needs fixing
+function getUsers() {
     console.log("Invoked getUser()");     //console.log your BFF for debugging client side
     const UserID = document.getElementById("UserID").value;  //get the UserId from the HTML element with id=UserID
     debugger;				  //debugger statement to allow you to step through the code in console dev F12
@@ -36,10 +36,32 @@ function getUsers() {  //this function needs fixing
         if (response.hasOwnProperty("Error")) {         //checks if response from server has an "Error"
             alert(JSON.stringify(response));            // if it does, convert JSON object to string and alert
         } else {
-            document.getElementById("DisplayOneUser").innerHTML = response.UserID + " " + response.Name;  //Hi Laura, this line is giving me hiccups
+            document.getElementById("DisplayOneUser").innerHTML = response.UserID + " " + response.Email + " " + response.Name;
+            document.getElementById("DisplayOneUser").innerHTML = itemsHTML;
         }
     });
 }
+
+function deleteUsers() {
+    console.log("Invoked deleteUser()");     //console.log your BFF for debugging client side
+    const UserID = document.getElementById("User").value;  //get the UserId from the HTML element with id=UserID
+    debugger;				  //debugger statement to allow you to step through the code in console dev F12
+    const url = "/users/delete/";       // API method on webserver
+    fetch(url + UserID, {                // UserID as a path parameter
+        method: "DELETE",
+    }).then(response => {
+        return response.json();                         //return response to JSON
+    }).then(response => {                                   //something here
+        if (response.hasOwnProperty("Error")) {         //checks if response from server has an "Error"
+            alert(JSON.stringify(response));            // if it does, convert JSON object to string and alert
+        } else {
+            alert(JSON.stringify(response), "has been deleted"); //this line
+            //document.getElementById("DisplayOneUser").innerHTML = response.UserID + " " + response.Name;
+            //document.getElementById("DisplayOneUser").innerHTML = itemsHTML;
+        }
+    });
+}
+
 function UsersLogin() {
     debugger;
     console.log("Invoked UserLogin() ");

@@ -37,19 +37,20 @@ public class Users { ;
             return "{\"Error\": \"Unable to list items.  Error code xx.\"}";
         }
     }
-    //gets the data about a User with x ID
+    //gets the info about a User with x ID
     @GET
     @Path("get/{UserID}")
     public String GetUser(@PathParam("UserID") Integer UserID) {
         System.out.println("Invoked Users.GetUser() with UserID " + UserID);
         try {
-            PreparedStatement ps = Main.db.prepareStatement("SELECT UserID, Name FROM Users WHERE UserID = ?"); //selecting UserID and Name from the table Users where the UserID is x
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserID, Email, Name FROM Users WHERE UserID = ?"); //selecting UserID, Email and Name from the table Users where the UserID is x
             ps.setInt(1, UserID);
             ResultSet results = ps.executeQuery();
             JSONObject response = new JSONObject();
             if (results.next() == true) {
                 response.put("UserID", results.getString(1)); //fetching UserID
-                response.put("Name", results.getString(2)); //fetching Name associated with Name
+                response.put("Email", results.getString(2)); //fetching Email
+                response.put("Name", results.getString(3)); //fetching Name associated with Name
             }
             return response.toString();
         } catch (Exception exception) {

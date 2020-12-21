@@ -19,7 +19,7 @@ function getBasket() {
       //      OrderID = response.OrderID;
     //    }
     //});
-    debugger;
+    //debugger;
     console.log(UserID);
     const url1 = "/checkout/getItems/";
     let itemsHTML = "";
