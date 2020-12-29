@@ -42,7 +42,7 @@ function getItems() {
     });
 }
 
-function AddItems() {
+function AddItems(message) {
     //debugger;
     console.log("Invoked ItemsAdd() ");
     let url = "/items/add";
@@ -60,26 +60,24 @@ function AddItems() {
             alert("Item was added to database.");
         }
     });
-
-function DeleteItems() {
-    //debugger;
-    console.log("Invoked ItemsDelete() ");
-    let url = "/items/Delete";
-    let formData = new FormData(document.getElementById('ItemForm'));
-
-    fetch(url, {
-        method: "POST",
-        body: formData,
+}
+function deleteItems() {
+    console.log("Invoked deleteItems()");     //console.log your BFF for debugging client side
+    const ItemID = document.getElementById("Item").value;  //get the UserId from the HTML element with id=UserID
+    //debugger;				  //debugger statement to allow you to step through the code in console dev F12
+    const url = "/items/delete/";       // API method on webserver
+    fetch(url + ItemID, {                // ItemID as a path parameter
+        method: "DELETE",
     }).then(response => {
-        return response.json();                 //now return that promise to JSON
-    }).then(response => {
-        if (response.hasOwnProperty("Error")) {
-            alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
+        return response.json();                         //return response to JSON
+    }).then(response => {                                   //something here
+        if (response.hasOwnProperty("Error")) {         //checks if response from server has an "Error"
+            alert(JSON.stringify(response));            // if it does, convert JSON object to string and alert
         } else {
-            alert("Item was removed from database.");
+            alert(JSON.stringify(response), "has been deleted");
         }
     });
-}
+
 }
 
 

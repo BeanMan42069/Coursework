@@ -26,7 +26,7 @@ function formatUsersList(myJSONArray){
 function getUsers() {
     console.log("Invoked getUser()");     //console.log your BFF for debugging client side
     const UserID = document.getElementById("UserID").value;  //get the UserId from the HTML element with id=UserID
-    debugger;				  //debugger statement to allow you to step through the code in console dev F12
+    //debugger;				  //debugger statement to allow you to step through the code in console dev F12
     const url = "/users/get/";       // API method on webserver
     fetch(url + UserID, {                // UserID as a path parameter
         method: "GET",
@@ -43,9 +43,9 @@ function getUsers() {
 }
 
 function deleteUsers() {
-    console.log("Invoked deleteUser()");     //console.log your BFF for debugging client side
+    console.log("Invoked deleteUsers()");     //console.log your BFF for debugging client side
     const UserID = document.getElementById("User").value;  //get the UserId from the HTML element with id=UserID
-    debugger;				  //debugger statement to allow you to step through the code in console dev F12
+    //debugger;				  //debugger statement to allow you to step through the code in console dev F12
     const url = "/users/delete/";       // API method on webserver
     fetch(url + UserID, {                // UserID as a path parameter
         method: "DELETE",
@@ -55,15 +55,13 @@ function deleteUsers() {
         if (response.hasOwnProperty("Error")) {         //checks if response from server has an "Error"
             alert(JSON.stringify(response));            // if it does, convert JSON object to string and alert
         } else {
-            alert(JSON.stringify(response), "has been deleted"); //this line
-            //document.getElementById("DisplayOneUser").innerHTML = response.UserID + " " + response.Name;
-            //document.getElementById("DisplayOneUser").innerHTML = itemsHTML;
+            alert(JSON.stringify(response), "has been deleted");
         }
     });
 }
 
 function UsersLogin() {
-    debugger;
+    //debugger;
     console.log("Invoked UserLogin() ");
     let url = "/users/login";
     let formData = new FormData(document.getElementById('LoginForm'));

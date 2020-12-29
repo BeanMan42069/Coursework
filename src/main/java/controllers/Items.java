@@ -77,6 +77,22 @@ public class Items{ ;
             }
 
         }
+    //deleting an item
+    @DELETE
+    @Path("delete/{ItemID}")
+    public String ItemsDelete(@PathParam("ItemID") Integer ItemID){
+        System.out.println("Invoked Items.DeleteItem()");
+        try {
+            PreparedStatement ps = Main.db.prepareStatement("DELETE FROM Items WHERE ItemID = ? ");
+            ps.setInt(1, ItemID);
+            ps.execute();
+            return "{\"OK\": \"Deleted Item.\"}";
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"Error\": \"Unable to delete user, please see server console for more info.\"}";
+        }
+
+    }
 
 
 }

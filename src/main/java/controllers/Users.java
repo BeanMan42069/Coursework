@@ -23,7 +23,7 @@ public class Users { ;
         System.out.println("Invoked Users.UsersList()");
         JSONArray response = new JSONArray();
         try {
-            PreparedStatement ps = Main.db.prepareStatement("SELECT UserID, Name FROM Users");  //selecting UserID and Name from the table Users
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserID, Name, Email FROM Users");  //selecting UserID and Name from the table Users
             ResultSet results = ps.executeQuery();
             while (results.next() == true) {
                 JSONObject row = new JSONObject();
@@ -74,6 +74,22 @@ public class Users { ;
         } catch (Exception exception) {
             System.out.println("Database error: " + exception.getMessage());
             return "{\"Error\": \"Unable to create new item, please see server console for more info.\"}";
+        }
+
+    }
+    //deleting a user
+    @DELETE
+    @Path("delete/{UserID}")
+    public String UsersDelete(@PathParam("UserID") Integer UserID){
+        System.out.println("Invoked Users.DeleteUser()");
+        try {
+            PreparedStatement ps = Main.db.prepareStatement("DELETE FROM USERS WHERE UserID = ? ");
+            ps.setInt(1, UserID);
+            ps.execute();
+            return "{\"OK\": \"Deleted user.\"}";
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"Error\": \"Unable to delete user, please see server console for more info.\"}";
         }
 
     }
