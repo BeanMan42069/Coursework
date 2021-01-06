@@ -47,6 +47,7 @@ function deleteUsers() {
     const UserID = document.getElementById("User").value;  //get the UserId from the HTML element with id=UserID
     //debugger;				  //debugger statement to allow you to step through the code in console dev F12
     const url = "/users/delete/";       // API method on webserver
+
     fetch(url + UserID, {                // UserID as a path parameter
         method: "DELETE",
     }).then(response => {
@@ -81,6 +82,7 @@ function UsersLogin() {
         }
     });
 }
+
 function AddUsers() {
     //debugger;
     console.log("Invoked AddUser() ");
