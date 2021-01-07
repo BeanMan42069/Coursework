@@ -9,6 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.UUID;
 
 @Path("users/")
@@ -61,14 +62,19 @@ public class Users { ;
     //adding a new user
     @POST
     @Path("add")
-    public String UsersAdd(@FormDataParam("UserID") Integer UserID, @FormDataParam("Name") String Name, @FormDataParam("Email") String Email, @FormDataParam("admin") Boolean Admin, @FormDataParam("Password") String Password,  @FormDataParam("SessionToken") String Cookie) {
+    public String UsersAdd(@FormDataParam("Name") String Name, @FormDataParam("Email") String Email, @FormDataParam("Password") String Password,  @FormDataParam("SessionToken") String Cookie) throws SQLException {
         System.out.println("Invoked Users.AddUser()");
+        PreparedStatement UserIncrement= Main.db.prepareStatement("SELECT MAX(UserID) FROM Users");
+        ResultSet UserIDset=UserIncrement.executeQuery();
+        int UserID = UserIDset.getInt(1)+1;
+        boolean Admin = false;
         try {
-            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Users (UserID, Password, Name, Email) VALUES (?, ?, ?, ?)");
+            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Users (UserID, Password, Name, Email, Admin) VALUES (?, ?, ?, ?, ?)");
             ps.setInt(1, UserID);
             ps.setString(2, Password);
             ps.setString(3, Name);
             ps.setString(4, Email);
+            ps.setBoolean(5, Admin);
             ps.execute();
             return "{\"OK\": \"Added user.\"}";
         } catch (Exception exception) {
