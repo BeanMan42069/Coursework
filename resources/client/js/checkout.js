@@ -27,7 +27,7 @@ function getBasket() {
         method: "GET",
     }).then(response => {
         return response.json();                         //return response to JSON
-    }).then(response => {                                   //something here
+    }).then(response => {                                  
         if (response.hasOwnProperty("Error")) {         //checks if response from server has an "Error"
             alert(JSON.stringify(response));            // if it does, convert JSON object to string and alert
         } else {

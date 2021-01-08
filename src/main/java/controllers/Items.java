@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Path("items/")
 @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -59,13 +60,16 @@ public class Items{ ;
         }
         @POST
         @Path("add")
-        public String ItemsAdd(@FormDataParam("ItemID") Integer ItemID, @FormDataParam("Name") String Name, @FormDataParam("ResourceID") Integer ResourceID,@FormDataParam("CategoryID") Integer CategoryID, @FormDataParam("Price") Float Price, @FormDataParam("Status") Integer Status) {
+        public String ItemsAdd(@FormDataParam("Name") String Name,@FormDataParam("CategoryID") Integer CategoryID, @FormDataParam("Price") Float Price, @FormDataParam("Status") Integer Status) throws SQLException {
             System.out.println("Invoked Items.ItemAdd()");
+            PreparedStatement ItemIncrement= Main.db.prepareStatement("SELECT MAX(ItemID) FROM Items");
+            ResultSet ItemIDset =ItemIncrement.executeQuery();
+            int ItemID = ItemIDset.getInt(1)+1;
             try {
                 PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Items (ItemID, Name, ResourceID, CategoryID, Price, Status) VALUES (?, ?, ?, ?, ?, ?)");
                 ps.setInt(1, ItemID);
                 ps.setString(2, Name);
-                ps.setInt(3, ResourceID);
+                ps.setInt(3, ItemID);
                 ps.setInt(4, CategoryID);
                 ps.setFloat(5, Price);
                 ps.setInt(6, Status);
