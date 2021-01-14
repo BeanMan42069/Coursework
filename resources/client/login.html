@@ -5,11 +5,15 @@
     <title>Login</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.js"></script>
     <script src="/client/js/users.js"></script>
+    <link rel="stylesheet" type="text/css" href="/client/css/styles.css">
     <style>
         Div {
             border: 2px outset black;
-            background-color: lightblue;
+            background-color: #ebba34;
             text-align: center;
+            width: 300px;
+            height: 100px;
+
         }
     </style>
 </head>
@@ -20,14 +24,16 @@
     <a href="/client/checkout.html">Basket</a> |
     <a href="/client/login.html">Login</a>
 </nav>
-<div>
+
+
+<div class = "Div">
 <form id="LoginForm">
     <label for="Email">Email:</label>
-    <input type="text" name="Email" id="Email">
+    <input type="text" name="Email" id="Email"> <br/>
     <label for="Password">Password:</label>
     <input type="password" name="Password" id="Password">
 </form>
-<button class="button" onclick='UserLogin();'>LOGIN</button>  <!--UsersLogin()in users.js-->
+<button class="button" onclick='UsersLogin();'>LOGIN</button>  <!--UsersLogin()in users.js-->
 </div>
 </body>
 </html>

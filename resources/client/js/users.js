@@ -61,6 +61,26 @@ function deleteUsers() {
     });
 }
 
+function AddUsers() {
+    //debugger;
+    console.log("Invoked AddUser() ");
+    let url = "/users/add";
+    let formData = new FormData(document.getElementById('UserForm'));
+
+    fetch(url, {
+        method: "POST",
+        body: formData,
+    }).then(response => {
+        return response.json();                 //now return that promise to JSON
+    }).then(response => {
+        if (response.hasOwnProperty("Error")) {
+            alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
+        } else {
+            alert("User was added to database.");
+        }
+    });
+
+}
 function UsersLogin() {
     //debugger;
     console.log("Invoked UserLogin() ");
@@ -81,27 +101,6 @@ function UsersLogin() {
             window.open("menu.html", "_self");       //open menu.html in same tab
         }
     });
-}
-
-function AddUsers() {
-    //debugger;
-    console.log("Invoked AddUser() ");
-    let url = "/users/add";
-    let formData = new FormData(document.getElementById('UserForm'));
-
-    fetch(url, {
-        method: "POST",
-        body: formData,
-    }).then(response => {
-        return response.json();                 //now return that promise to JSON
-    }).then(response => {
-        if (response.hasOwnProperty("Error")) {
-            alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
-        } else {
-            alert("User was added to database.");
-        }
-    });
-
 }
 
 
