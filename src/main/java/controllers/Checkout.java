@@ -78,7 +78,7 @@ public class Checkout {  //get basket NEED TO UPDATE FOR ADDED table
         System.out.println("BasketAdd()");
         try{
             System.out.println("users/logout "+ Token);
-            PreparedStatement p = Main.db.prepareStatement("SELECT OrderID FROM Orders WHERE UserID=?");
+            PreparedStatement p = Main.db.prepareStatement("SELECT OrderID FROM Orders WHERE UserID=?"); //prepared statement
             p.setString(1, Token);
             ResultSet OrderIDResults = p.executeQuery();
             if (OrderIDResults.next()){
