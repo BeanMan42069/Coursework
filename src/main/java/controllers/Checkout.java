@@ -65,14 +65,73 @@ public class Checkout {  //get basket NEED TO UPDATE FOR ADDED table
 
             }
 
-            //if (results.next() == true) {
-               // response.put("OrderID", results.getInt(1)); //fetching UserID
-           // }
-
             return response.toString();
         } catch (Exception exception) {
             System.out.println("Database error: " + exception.getMessage());
             return "{\"Error\": \"Unable to get item, please see server console for more info.\"}";
         }
     }
+    @POST
+    @Path("add/{ItemID}")
+    public String BasketsAdd(@CookieParam("token") String Token, @PathParam("ItemID") int productID, int OrderID, int ItemID){
+        int UserID = Users.validToken(Token);
+        System.out.println("BasketAdd()");
+        try{
+            System.out.println("users/logout "+ Token);
+            PreparedStatement p = Main.db.prepareStatement("SELECT OrderID FROM Orders WHERE UserID=?");
+            p.setString(1, Token);
+            ResultSet OrderIDResults = p.executeQuery();
+            if (OrderIDResults.next()){
+                try {
+                    PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Added (OrderID, ItemID) VALUES(?,?)");
+                    ps.setInt(1, OrderID);
+                    ps.setInt(2, ItemID);
+                    ps.executeUpdate();
+                    return("Added to Basket.");
+                }catch (Exception exception){
+                    System.out.println("Database error: " + exception.getMessage());
+                    return "{\"Error\": \"Unable to list items.  Error code xx.\"}";
+                }
+            } else {
+                return "{\"error\": \"Invalid token!\"}";
+
+            }
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Server side error!\"}";
+        }
+
+
+    }
+    @POST
+    @Path("delete/{ItemID}")
+    public String removeFromWishlist(@CookieParam("token") String Token, @PathParam("ItemID") int ItemID, int OrderID){
+        int UserID = Users.validToken(Token);
+        System.out.println("BasketDelete()");
+        try{
+            System.out.println("users/logout "+ Token);
+            PreparedStatement p = Main.db.prepareStatement("SELECT OrderID FROM Orders WHERE UserID=?");
+            p.setString(1, Token);
+            ResultSet OrderIDResults = p.executeQuery();
+            if (OrderIDResults.next()){
+                try {
+                    PreparedStatement ps = Main.db.prepareStatement("DELETE FROM Added WHERE OrderID=? AND ItemID=?");
+                    ps.setInt(1, OrderID);
+                    ps.setInt(2, ItemID);
+                    ps.executeUpdate();
+                    return("Removed from wishlist.");
+                }catch (Exception exception){
+                    System.out.println("Database error: " + exception.getMessage());
+                    return "{\"Error\": \"Unable to list items.  Error code xx.\"}";
+                }
+            } else {
+                return "{\"error\": \"Invalid token!\"}";
+
+            }
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Server side error!\"}";
+        }
+}
+
 }

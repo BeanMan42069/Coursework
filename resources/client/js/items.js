@@ -42,7 +42,7 @@ function getItems() {
     });
 }
 
-function AddItems(message) {
+function AddItems() {
     //debugger;
     console.log("Invoked ItemsAdd() ");
     let url = "/items/add";
@@ -79,6 +79,42 @@ function deleteItems() {
     });
 
 }
+function BasketsAdd(){
+
+    console.log("Invoked addWish()");
+    const url = "/checkout/add/";
+    fetch(url + ItemID,{
+        method: "POST",
+        body: formData,
+    }).then(response => {
+        return response.json();                 //now return that promise to JSON
+    }).then(response => {
+        if (response.hasOwnProperty("Error")) {
+            alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
+        } else {
+            alert("Item was added to database.");
+        }
+    });
+}
+
+function BasketsDelete(){
+    console.log("Invoked addWish()");
+    const url = "checkout/delete/";
+    fetch(url + ItemID, {                // ItemID as a path parameter
+        method: "DELETE",
+    }).then(response => {
+        return response.json();                         //return response to JSON
+    }).then(response => {                                   //something here
+        if (response.hasOwnProperty("Error")) {         //checks if response from server has an "Error"
+            alert(JSON.stringify(response));            // if it does, convert JSON object to string and alert
+        } else {
+            alert(JSON.stringify(response),"has been deleted");
+        }
+    });
+
+}
+
+
 
 
 

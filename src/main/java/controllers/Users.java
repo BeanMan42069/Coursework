@@ -105,33 +105,8 @@ public class Users { ;
     public String UsersLogin(@FormDataParam("Email") String Email, @FormDataParam("Password") String Password) {
         System.out.println("Invoked loginUsers" +
                 "() on path users/login");
-        try {
-            PreparedStatement ps1 = Main.db.prepareStatement("SELECT PassWord FROM Users WHERE Email = ?");
-            ps1.setString(1, Email);
-            ResultSet loginResults = ps1.executeQuery();
-            if (loginResults.next() == true) {
-                String correctPassword = loginResults.getString(1);
-                if (Password.equals(correctPassword)) {
-                    String Token = UUID.randomUUID().toString();
-                    PreparedStatement ps2 = Main.db.prepareStatement("UPDATE Users SET Token = ? WHERE Email = ?");
-                    ps2.setString(1, Token);
-                    ps2.setString(2, Email);
-                    ps2.executeUpdate();
-                    JSONObject userDetails = new JSONObject();
-                    userDetails.put("Email",Email);
-                    userDetails.put("Token", Token);
-                    return userDetails.toString();
-                } else {
-                    return "{\"Error\": \"Incorrect username or password\"}";
-                }
-            } else {
-                return "{\"Error\": \"Incorrect username or password\"}";
-            }
-        } catch (Exception exception) {
-            System.out.println("Database error during /users/login: " + exception.getMessage());
-            return "{\"Error\": \"Server side error!\"}";
+         return "{\"Error\": \"Server side error!\"}";
         }
-    }
 
     @POST
     @Path("Logout")
@@ -157,6 +132,20 @@ public class Users { ;
             return "{\"error\": \"Server side error!\"}";
         }
     }
+    public static int validToken(String token) {
+        System.out.println("Invoked users.validToken(), Token value " + token);
+        try {
+            PreparedStatement statement = Main.db.prepareStatement("SELECT UserID FROM Users WHERE token = ?");
+            statement.setString(1, token);
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println("userID is " + resultSet.getInt("userID"));
+            return resultSet.getInt("userID");  //Retrieve by column name  (should really test we only get one result back!)
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;  //rogue value indicating error
+        }
+    }
+
 }
 
 

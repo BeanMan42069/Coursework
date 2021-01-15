@@ -35,6 +35,14 @@
 </form>
 <button class="button" onclick='UsersLogin();'>LOGIN</button>  <!--UsersLogin()in users.js-->
 </div>
+<br>
+<form id="UserForm">
+    Name:  <input type="text" name="Name">
+    Email: <input type="text" name="Email">
+    Password: <input type="password" name="Password">
+</form>
+<button onclick='AddUsers();'>Sign Up </button>
+<table id="UsersTable"></table>
 <button class="button" onclick='UsersLogout();'>LOGOUT</button>
 </body>
 </html>
