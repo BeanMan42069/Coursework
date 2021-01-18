@@ -102,15 +102,38 @@ public class Users { ;
     //logging in
     @POST
     @Path("login")
-    public String UsersLogin(@FormDataParam("Email") String Email, @FormDataParam("Password") String Password) {
-        System.out.println("Invoked loginUsers" +
-                "() on path users/login");
-         return "{\"Error\": \"Server side error!\"}";
+    public String UsersLogin(@FormDataParam("Email") String Email, @FormDataParam("Password") String Password) { //takes email and passwords as variables
+        System.out.println("Invoked loginUser() on path users/login");
+        try {
+            PreparedStatement ps1 = Main.db.prepareStatement("SELECT PassWord FROM Users WHERE Email = ?"); //retrieving password from database
+            ps1.setString(1, Email);
+            ResultSet loginResults = ps1.executeQuery();
+            if (loginResults.next() == true) {
+                String correctPassword = loginResults.getString(1);
+                if (Password.equals(correctPassword)) {  //checking password
+                    String Token = UUID.randomUUID().toString();
+                    PreparedStatement ps2 = Main.db.prepareStatement("UPDATE Users SET Token = ? WHERE Email = ?"); //generating and assigning cookie token
+                    ps2.setString(1, Token);
+                    ps2.setString(2, Email);
+                    ps2.executeUpdate();
+                    JSONObject userDetails = new JSONObject();
+                    userDetails.put("Email", Email);
+                    userDetails.put("Token", Token);  //assigning a token to the session
+                    return userDetails.toString();
+                } else {
+                    return "{\"Error\": \"Incorrect username or password\"}";
+                }
+            } else {
+                return "{\"Error\": \"Incorrect username or password\"}";
+            }  //indicating that one or both of the details that were entered are incorrect
+        } catch (Exception exception) {
+            System.out.println("Database error during /users/login: " + exception.getMessage());
+            return "{\"Error\": \"Server side error!\"}";
         }
-
+    }
     @POST
     @Path("Logout")
-    public static String logout(@CookieParam("Token") String Token){
+    public static String Logout(@CookieParam("Token") String Token){
         try{
             System.out.println("users/logout "+ Token);
             PreparedStatement ps = Main.db.prepareStatement("SELECT UserID FROM Users WHERE Token=?");

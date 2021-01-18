@@ -115,7 +115,7 @@ function UsersLogout() {
             alert(JSON.stringify(response));        // if it does, convert JSON object to string and alert
         } else {
             Cookies.remove("Token", response.Token);    //UserName and Token are removed
-            Cookies.remove("UserName", response.UserName);
+            Cookies.remove("Email", response.Email);
             window.open("index.html", "_self");       //open index.html in same tab
         }
     });
